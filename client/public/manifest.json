@@ -21,6 +21,7 @@
   "background_color": "#ffffff",
   "orientation": "portrait-primary",
   "scope": "/",
+  "id": "/",
   "lang": "tr",
   "categories": ["business", "productivity", "utilities"],
   "screenshots": [

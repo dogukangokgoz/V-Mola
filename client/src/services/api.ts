@@ -22,8 +22,14 @@ const getApiBaseUrl = () => {
   
   const protocol = window.location.protocol;
   const hostname = window.location.hostname;
-  const port = window.location.port || '5000';
   
+  // Production'da port kullanma
+  if (hostname.includes('vercel.app') || hostname.includes('yourdomain.com')) {
+    return `${protocol}//${hostname}/api`;
+  }
+  
+  // Development'da port kullan
+  const port = window.location.port || '5000';
   return `${protocol}//${hostname}:${port}/api`;
 };
 
