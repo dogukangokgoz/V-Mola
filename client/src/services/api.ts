@@ -23,6 +23,11 @@ const getApiBaseUrl = () => {
   const protocol = window.location.protocol;
   const hostname = window.location.hostname;
   
+  // Netlify production'da Railway API kullan
+  if (hostname.includes('netlify.app') || hostname.includes('veritasmola.netlify.app')) {
+    return 'https://your-railway-app.up.railway.app/api';
+  }
+
   // Production'da port kullanma
   if (hostname.includes('vercel.app') || hostname.includes('yourdomain.com')) {
     return `${protocol}//${hostname}/api`;
