@@ -1,0 +1,68 @@
+{
+  "short_name": "Mola Takip",
+  "name": "Mola Takip Sistemi",
+  "description": "Çalışanların mola sürelerini takip eden modern web uygulaması",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192",
+      "purpose": "any"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#2563eb",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "tr",
+  "categories": ["business", "productivity", "utilities"],
+  "screenshots": [
+    {
+      "src": "screenshot1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshot2.png", 
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Mola Başlat",
+      "short_name": "Mola",
+      "description": "Hızlı mola başlatma",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "logo192.svg",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Admin Panel",
+      "short_name": "Admin",
+      "description": "Yönetici paneline git",
+      "url": "/admin",
+      "icons": [
+        {
+          "src": "logo192.svg",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
