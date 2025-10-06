@@ -46,10 +46,13 @@ export interface ActiveBreak extends Break {
 }
 
 export interface DailyStats {
-  breakCount: number;
-  totalMinutes: number;
-  remainingMinutes: number;
-  maxDailyMinutes: number;
+  totalUsers?: number;
+  todayBreaks?: number;
+  activeBreaks?: number;
+  breakCount?: number;
+  totalMinutes?: number;
+  remainingMinutes?: number;
+  maxDailyMinutes?: number;
 }
 
 export interface BreakStatus {
@@ -78,15 +81,21 @@ export interface BreakHistory {
 }
 
 export interface AdminDashboard {
-  activeBreaks: ActiveBreak[];
-  dailyStats: {
+  totalUsers: number;
+  activeBreaks: number;
+  todayBreaks: number;
+  departments: Array<{
+    name: string;
+    userCount: number;
+  }>;
+  dailyStats?: {
     totalUsers: number;
     activeUsers: number;
     totalBreaks: number;
     totalMinutes: number;
     avgDuration: number;
   };
-  departmentStats: Array<{
+  departmentStats?: Array<{
     department: string;
     userCount: number;
     breakCount: number;

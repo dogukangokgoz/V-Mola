@@ -6,10 +6,10 @@ interface ActiveBreaksProps {
 }
 
 const ActiveBreaks: React.FC<ActiveBreaksProps> = ({ activeBreaks: initialActiveBreaks }) => {
-  const [activeBreaks, setActiveBreaks] = useState<ActiveBreak[]>(initialActiveBreaks);
+  const [activeBreaks, setActiveBreaks] = useState<ActiveBreak[]>(initialActiveBreaks || []);
 
   useEffect(() => {
-    setActiveBreaks(initialActiveBreaks);
+    setActiveBreaks(initialActiveBreaks || []);
   }, [initialActiveBreaks]);
 
   // Gerçek zamanlı sayaç

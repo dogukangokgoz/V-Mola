@@ -56,7 +56,7 @@ const BreakTimer: React.FC<BreakTimerProps> = ({
   };
 
   const canStartBreak = () => {
-    return !activeBreak && dailyStats && dailyStats.remainingMinutes > 0;
+    return !activeBreak && dailyStats && (dailyStats.remainingMinutes || 0) > 0;
   };
 
   const handleStartBreak = () => {

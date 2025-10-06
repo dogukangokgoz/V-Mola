@@ -41,8 +41,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       authAPI.getMe()
         .then(response => {
           if (response.data.success) {
-            setUser(response.data.data!.user);
-            localStorage.setItem('user', JSON.stringify(response.data.data!.user));
+            // API response formatını kontrol et
+            const userData = (response.data.data as any)?.currentUser || response.data.data?.user || response.data.data;
+            if (userData) {
+              setUser(userData);
+              localStorage.setItem('user', JSON.stringify(userData));
+            } else {
+              logout();
+            }
           } else {
             // Token geçersiz, çıkış yap
             logout();

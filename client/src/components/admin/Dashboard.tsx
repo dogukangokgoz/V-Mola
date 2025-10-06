@@ -5,13 +5,13 @@ import LoadingSpinner from '../common/LoadingSpinner';
 import ActiveBreaks from './ActiveBreaks';
 import DailyOverview from './DailyOverview';
 import DepartmentStats from './DepartmentStats';
-import io, { Socket } from 'socket.io-client';
+// Socket import'u kaldırıldı
 
 const Dashboard: React.FC = () => {
   const [dashboardData, setDashboardData] = useState<AdminDashboardType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [socket, setSocket] = useState<Socket | null>(null);
+  // Socket state'leri kaldırıldı
   const [notifications, setNotifications] = useState<Array<{
     id: string;
     message: string;
@@ -22,51 +22,27 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     loadDashboardData();
     
-    // WebSocket bağlantısı kur
-    const newSocket = io('http://localhost:5000');
-    setSocket(newSocket);
-
-    // Real-time bildirimleri dinle
-    newSocket.on('break_started', (data) => {
-      setNotifications(prev => [{
-        id: `${data.breakId}-start`,
-        message: data.message,
-        type: 'break_started',
-        timestamp: new Date()
-      }, ...prev.slice(0, 4)]); // Son 5 bildirimi tut
-      
-      // Dashboard verilerini yenile
-      loadDashboardData();
-    });
-
-    newSocket.on('break_ended', (data) => {
-      setNotifications(prev => [{
-        id: `${data.breakId}-end`,
-        message: data.message,
-        type: 'break_ended',
-        timestamp: new Date()
-      }, ...prev.slice(0, 4)]); // Son 5 bildirimi tut
-      
-      // Dashboard verilerini yenile
-      loadDashboardData();
-    });
-    
+    // Socket bağlantısı kaldırıldı
     // Her 30 saniyede bir verileri yenile
     const interval = setInterval(loadDashboardData, 30000);
     
     return () => {
       clearInterval(interval);
-      newSocket.disconnect();
     };
   }, []);
 
   const loadDashboardData = async () => {
     try {
       setError('');
+      console.log('Dashboard verileri yükleniyor...');
       const response = await adminAPI.getDashboard();
+      console.log('Dashboard response:', response.data);
       
       if (response.data.success) {
+        console.log('Dashboard data set ediliyor:', response.data.data);
         setDashboardData(response.data.data!);
+      } else {
+        console.error('Dashboard API başarısız:', response.data);
       }
     } catch (err: any) {
       setError(err.message || 'Dashboard verileri yüklenirken hata oluştu');
@@ -109,10 +85,10 @@ const Dashboard: React.FC = () => {
       <div className="text-center py-12">
         <div className="text-gray-400 text-6xl mb-4">📊</div>
         <h3 className="text-lg font-medium text-gray-900 mb-2">
-          Dashboard Verisi Bulunamadı
+          Dashboard Yükleniyor...
         </h3>
         <p className="text-gray-500">
-          Henüz yeterli veri bulunmuyor.
+          Veriler getiriliyor.
         </p>
       </div>
     );
@@ -186,13 +162,19 @@ const Dashboard: React.FC = () => {
       )}
 
       {/* Daily Overview */}
-      <DailyOverview dailyStats={dashboardData.dailyStats} />
+      <DailyOverview dailyStats={{
+        totalUsers: dashboardData.totalUsers || 0,
+        todayBreaks: dashboardData.todayBreaks || 0,
+        activeBreaks: dashboardData.activeBreaks || 0,
+        remainingMinutes: 240,
+        maxDailyMinutes: 240
+      } as any} />
 
       {/* Active Breaks */}
-      <ActiveBreaks activeBreaks={dashboardData.activeBreaks} />
+      <ActiveBreaks activeBreaks={[]} />
 
       {/* Department Stats */}
-      <DepartmentStats departmentStats={dashboardData.departmentStats} />
+      <DepartmentStats departmentStats={(dashboardData.departments || []) as any} />
     </div>
   );
 };

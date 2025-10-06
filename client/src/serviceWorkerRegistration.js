@@ -9,6 +9,10 @@ const isLocalhost = Boolean(
 // TypeScript types removed for JavaScript compatibility
 
 export function register(config) {
+  // Service Worker devre dışı bırakıldı
+  console.log('Service Worker registration devre dışı bırakıldı');
+  return;
+  
   if ('serviceWorker' in navigator) {
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
     if (publicUrl.origin !== window.location.origin) {

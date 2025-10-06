@@ -12,6 +12,16 @@ interface DepartmentStatsProps {
 }
 
 const DepartmentStats: React.FC<DepartmentStatsProps> = ({ departmentStats }) => {
+  // Undefined kontrolleri
+  if (!departmentStats || !Array.isArray(departmentStats)) {
+    return (
+      <div className="bg-white shadow rounded-lg p-6">
+        <h2 className="text-lg font-medium text-gray-900 mb-4">Departman İstatistikleri</h2>
+        <div className="text-center text-gray-500">Veriler yükleniyor...</div>
+      </div>
+    );
+  }
+
   const formatDuration = (minutes: number): string => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;

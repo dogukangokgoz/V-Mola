@@ -14,31 +14,8 @@ import {
   Department
 } from '../types';
 
-// Dinamik API URL - mevcut hostname'i kullan
-const getApiBaseUrl = () => {
-  if (process.env.REACT_APP_API_URL) {
-    return process.env.REACT_APP_API_URL;
-  }
-  
-  const protocol = window.location.protocol;
-  const hostname = window.location.hostname;
-  
-  // Netlify production'da Netlify Functions kullan
-  if (hostname.includes('netlify.app')) {
-    return `${protocol}//${hostname}/api`;
-  }
-
-  // Production'da port kullanma
-  if (hostname.includes('vercel.app') || hostname.includes('yourdomain.com')) {
-    return `${protocol}//${hostname}/api`;
-  }
-  
-  // Development'da port kullan
-  const port = window.location.port || '5000';
-  return `${protocol}//${hostname}:${port}/api`;
-};
-
-const API_BASE_URL = getApiBaseUrl();
+// Sabit API URL - Netlify Functions
+const API_BASE_URL = 'https://veritasmola.netlify.app/api';
 
 // Axios instance oluştur
 const api = axios.create({
