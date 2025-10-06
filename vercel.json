@@ -7,57 +7,26 @@
       "config": {
         "distDir": "build"
       }
+    },
+    {
+      "src": "netlify/functions/*.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
-      "headers": {
-        "cache-control": "public, max-age=31536000, immutable"
-      }
+      "src": "/api/(.*)",
+      "dest": "/netlify/functions/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/client/build/$1"
     }
   ],
   "env": {
-    "REACT_APP_API_URL": "https://your-backend-url.vercel.app/api"
-  },
-  "functions": {
-    "client/build/static/js/*.js": {
-      "maxDuration": 30
-    }
-  },
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        }
-      ]
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/admin",
-      "destination": "/admin/dashboard",
-      "permanent": false
-    },
-    {
-      "source": "/dashboard",
-      "destination": "/dashboard",
-      "permanent": false
-    }
-  ]
+    "SUPABASE_URL": "@supabase_url",
+    "SUPABASE_ANON_KEY": "@supabase_anon_key",
+    "JWT_SECRET": "@jwt_secret",
+    "JWT_EXPIRE": "24h"
+  }
 }
