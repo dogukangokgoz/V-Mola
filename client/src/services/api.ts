@@ -23,9 +23,9 @@ const getApiBaseUrl = () => {
   const protocol = window.location.protocol;
   const hostname = window.location.hostname;
   
-  // Netlify production'da Railway API kullan
-  if (hostname.includes('netlify.app') || hostname.includes('veritasmola.netlify.app')) {
-    return 'https://your-railway-app.up.railway.app/api';
+  // Netlify production'da Netlify Functions kullan
+  if (hostname.includes('netlify.app')) {
+    return `${protocol}//${hostname}/api`;
   }
 
   // Production'da port kullanma
@@ -78,7 +78,7 @@ api.interceptors.response.use(
 // Auth API
 export const authAPI = {
   login: (data: LoginRequest): Promise<AxiosResponse<ApiResponse<LoginResponse>>> =>
-    api.post('/auth/login', data),
+    api.post('/auth', data),
   
   register: (data: RegisterRequest): Promise<AxiosResponse<ApiResponse<{ user: User }>>> =>
     api.post('/auth/register', data),
@@ -87,7 +87,7 @@ export const authAPI = {
     api.post('/auth/logout'),
   
   getMe: (): Promise<AxiosResponse<ApiResponse<{ user: User }>>> =>
-    api.get('/auth/me'),
+    api.get('/users'),
   
   refreshToken: (): Promise<AxiosResponse<ApiResponse<{ token: string }>>> =>
     api.post('/auth/refresh'),
@@ -99,10 +99,10 @@ export const breakAPI = {
     api.get(`/breaks/status/${userId}`),
   
   startBreak: (data: { breakTypeId?: number }): Promise<AxiosResponse<ApiResponse<{ break: Break }>>> =>
-    api.post('/breaks/start', data),
+    api.post('/breaks', data),
   
   endBreak: (breakId: number, data: { notes?: string }): Promise<AxiosResponse<ApiResponse<{ break: Break }>>> =>
-    api.post(`/breaks/end/${breakId}`, data),
+    api.put('/breaks', { breakId, ...data }),
   
   getHistory: (userId: number, params?: {
     startDate?: string;
@@ -116,7 +116,7 @@ export const breakAPI = {
     if (params?.page) queryParams.append('page', params.page.toString());
     if (params?.limit) queryParams.append('limit', params.limit.toString());
     
-    return api.get(`/breaks/history/${userId}?${queryParams.toString()}`);
+    return api.get(`/breaks?${queryParams.toString()}`);
   },
   
   getTypes: (): Promise<AxiosResponse<ApiResponse<{ breakTypes: BreakType[] }>>> =>

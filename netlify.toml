@@ -1,9 +1,25 @@
 [build]
   publish = "client/build"
-  command = "cd client && npm run build"
+  command = "cd client && npm run build && cd ../netlify/functions && npm install"
 
 [build.environment]
   NODE_VERSION = "18"
+
+# Functions ayarları
+[functions]
+  directory = "netlify/functions"
+
+# Environment variables (Netlify dashboard'dan ayarlanacak)
+[build.environment]
+  SUPABASE_URL = ""
+  SUPABASE_ANON_KEY = ""
+  JWT_SECRET = ""
+  JWT_EXPIRE = "24h"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
 
 [[redirects]]
   from = "/*"
@@ -14,3 +30,10 @@
   for = "/static/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Headers = "Content-Type, Authorization"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
