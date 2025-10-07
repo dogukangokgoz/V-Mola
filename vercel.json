@@ -23,10 +23,4 @@
       "dest": "/client/build/$1"
     }
   ],
-  "env": {
-    "SUPABASE_URL": "@supabase_url",
-    "SUPABASE_ANON_KEY": "@supabase_anon_key",
-    "JWT_SECRET": "@jwt_secret",
-    "JWT_EXPIRE": "24h"
-  }
 }
