@@ -48,5 +48,8 @@
   "devDependencies": {
     "@types/jest": "^27.5.0"
   },
+  "engines": {
+    "node": "22.x"
+  },
   "proxy": "http://localhost:5000"
 }

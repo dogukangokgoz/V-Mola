@@ -17,7 +17,7 @@
     "dotenv": "^16.4.5"
   },
   "engines": {
-    "node": "18.x"
+    "node": "22.x"
   },
   "keywords": ["mola", "takip", "break", "management"],
   "author": "Dogukan",
